@@ -11,7 +11,7 @@ class TypeHierarchy {
 
     this.organization = data.organization;
     this.proposition = data.proposition;
-    this.application = data.applicationl
+    this.application = data.application;
   }
 
   static validate(payload: any): void {

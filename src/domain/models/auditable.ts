@@ -8,7 +8,21 @@ const defaultObject = {
   updatedAt: moment.utc().format()
 }
 
-export default abstract class Auditable {
+const AuditableSchema = {
+  version: {
+    type: 'string'
+  },
+
+  createdAt: {
+    type: 'string'
+  },
+
+  updatedAt: {
+    type: 'string'
+  }
+};
+
+abstract class Auditable {
   version: number;
   createdAt: string;
   updatedAt: string;
@@ -19,4 +33,6 @@ export default abstract class Auditable {
     this.createdAt = data.createdAt;
     this.updatedAt = data.updatedAt;
   }
-}
+};
+
+export { AuditableSchema, Auditable };

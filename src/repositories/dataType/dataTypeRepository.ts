@@ -1,7 +1,8 @@
 'use strict';
-import Repository from '../../domain/repositories/repository';
 
-export default class LocalSubscriptionRepository implements Repository {
+import Repository from "domain/repositories/repository";
+
+export default class DataTypeRepository implements Repository {
   findById(id: String): Promise<any> {
     throw new Error('Not implemented yet!');
   }

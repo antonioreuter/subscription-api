@@ -1,53 +1,52 @@
 'use strict';
 
-import * as ajv from 'ajv';
+import Ajv from 'ajv';
 
-import Auditable from './auditable';
+import { AuditableSchema, Auditable } from './auditable';
 import { SubscriptionSQL, SubscriptionSQLSchema } from './subscriptionSQL';
 import { TypeHierarchy, TypeHierarchySchema } from './typeHierarchy';
-import InvalidSchemaError from 'domain/errors/invalidSchemaError';
+import InvalidSchemaError from '../errors/invalidSchemaError';
 
 const schema = {
-  '$schema': 'http://json-schema.org/draft-07/schema#',
-  '$id': 'http://example.com/product.schema.json',
   type: 'object',
   title: 'Subscription',
   description: 'A subscription to define an iot-rule',
   properties: {
     id: {
-      type: 'string',
+      type: 'string'
     },
 
-    alias: {
+    ...AuditableSchema,
+
+    name: {
       type: 'string',
-      minimum: 3,
-      maximum: 100,
-      description: 'An alias to reference a subscription'
+      minLength: 3,
+      maxLength: 100,
+      description: "The subscription's name"
     },
 
     description: {
       type: 'string',
-      maximum: 255
+      maxLength: 255
     },
 
     sql: SubscriptionSQLSchema,
 
     dataTypeName: {
       type: 'string',
-      minimum: 3
+      minLength: 3
     },
 
     typeHierarchy: TypeHierarchySchema
   },
 
-  required: [ 'alias', 'sql', 'dataTypeName', 'typeHierarchy' ]
+  required: [ 'name', 'sql', 'dataTypeName', 'typeHierarchy' ],
+  additionalProperties: false
 };
-
-const _ajv = new ajv();
 
 export default class Subscription extends Auditable {
   id: string;
-  alias: string;
+  name: string;
   description: string;
   dataTypeName: string;
   sql: SubscriptionSQL;
@@ -61,25 +60,20 @@ export default class Subscription extends Auditable {
     super(data);
 
     this.id = data.id;
-    this.alias = data.alias;
+    this.name = data.name;
     this.dataTypeName = data.dataTypeName;
     this.sql = data.sql;
     this.typeHierarchy = new TypeHierarchy(data.typeHierarchy);
   }
 
-  topic(): string {
-    if (!this.dataTypeName || !this.typeHierarchy) throw new Error('It is not possible to define the topic name. The type hierarchy and dataType must be defined first.');
-    const topicPrefix = [this.typeHierarchy.organization, this.typeHierarchy.proposition, this.typeHierarchy.application, this.dataTypeName].join('/');
-    return `${topicPrefix}/+`;
-  }
-
-  static validate(payload): void {
-    try {
-      console.log('Validating subscriptions schema');
-      console.log(`Schema: ${JSON.stringify(schema)}`);
-      _ajv.validate(schema, payload);
-    } catch (error) {
-      throw new InvalidSchemaError(error.message);
+  static validate(payload): Boolean {
+    const ajv = new Ajv({ allErrors: true });
+    const valid = ajv.validate(schema, payload);
+    if (!valid) {
+      const errorMsg = `Invalid subscription: ${ajv.errorsText()}`;
+      throw new InvalidSchemaError(errorMsg);
     }
+
+    return true;
   }
 }

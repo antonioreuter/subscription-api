@@ -16,9 +16,13 @@
     },
     "outDir": ".build/",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
   },
   "include": [
-    "./src/**/*"
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/test/**/*.test.ts"
   ]
 }
