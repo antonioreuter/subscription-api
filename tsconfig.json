@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "sourceMap": true,
+    "target": "es2017",
+    "moduleResolution": "node",
+    "lib": [
+      "es2017"
+    ],
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "*": [
+        "src/*"
+      ]
+    },
+    "outDir": ".build/",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": [
+    "./src/**/*",
+    "./test/**/*"
+  ]
+}

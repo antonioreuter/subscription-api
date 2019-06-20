@@ -1,0 +1,11 @@
+'use strict';
+
+enum ActionType {
+  DYNAMODB = 'DYNAMODB',
+  TDR = 'TDR',
+  BLOB = 'BLOB',
+  HTTP_SERVICE = 'HTTP_SERVICE',
+  HTTP_SERVICE_GUARANTEE_DELIVERY = 'HTTP_SERVICE_GUARANTEE_DELIVERY'
+}
+
+export default ActionType;

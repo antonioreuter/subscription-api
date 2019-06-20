@@ -1,0 +1,82 @@
+service: subscription-api
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+package:
+  individually: true
+
+custom:
+  applicationName: Subsription-Api
+  subscription-table: "subscription-${self:provider.stage}"
+  webpack:
+    includeModules:
+      forceExclude:
+        - aws-sdk
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: eu-west-1
+  versionFunctions: true
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:*"
+      Resource:
+        - Fn::Join:
+          - ":"
+          - - "arn:aws:dynamodb"
+            - Ref: "AWS::Region"
+            - Ref: "AWS::AccountId"
+            - Fn::Join:
+              - "/"
+              - - "table"
+                - "${self:custom.subscription-table}"
+
+  environment:
+    ENV: "dev"
+    SUBSCRIPTION-TABLE: "${self:custom.subscription-table}"
+
+tags:
+  DEPARTMENT: "HSDP"
+  TEAM: "Las Vegas"
+
+functions:
+  subscription-get:
+    handler: src/controllers/subscription/subscriptionGet.main
+    description: "List the subscriptions"
+    memorySize: 128
+    reservedConcurrency: 1
+    environment:
+      ComponentName: "Subscription-Get"
+
+  subscription-post:
+    handler: src/controllers/subscription/subscriptionPost.main
+    description: "Create a new subscription"
+    memorySize: 128
+    reservedConcurrency: 1
+    environment:
+      ComponentName: "Subscription-Post"
+
+resources:
+  Resources:
+    subscription-table:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:custom.subscription-table}"
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: version
+            AttributeType: N
+          - AttributeName: created_at
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+          - AttributeName: version
+            AttributeType: RANGE
