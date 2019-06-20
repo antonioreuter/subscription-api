@@ -11,9 +11,14 @@ export default class SubscriptionServiceImpl implements SubscriptionService {
     this.repository = repository;
   }
 
-  save(data: Subscription): Promise<Subscription> {
+  save(data: any): Promise<Subscription> {
     console.log('Invoking subscription service impl...');
-    return this.repository.save(data);
+    const subscription = new Subscription(data);
+
+    console.log(`Type: ${subscription.constructor.name}`)
+
+
+    return this.repository.save(subscription);
   }
 
   findById(id: String): Promise<Subscription> {

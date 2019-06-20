@@ -2,7 +2,7 @@
 import Repository from '../../domain/repositories/repository';
 
 export default class LocalSubscriptionRepository implements Repository {
-  findById(): Promise<any> {
+  findById(id: String): Promise<any> {
     throw new Error('Not implemented yet!');
   }
 

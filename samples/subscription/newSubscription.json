@@ -1,11 +1,14 @@
 {
   "id": "airpurifier#air_quality",
-  "created_at": "2019-06-18T19:30:00+1:00",
+  "createdAt": "2019-06-18T19:30:00+1:00",
   "version": "1",
   "alias": "AirQuality",
   "description": "Measure the air quality",
   "sql": {
     "projection": "id, clientId(), msg.air as air",
     "where": "air > 60"
+  },
+  "typeHierarchy": {
+    "organization": "4kj23l-l3k4j5l34-lk3j4lkj5l"
   }
 }

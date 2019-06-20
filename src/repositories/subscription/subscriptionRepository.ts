@@ -2,7 +2,7 @@
 import Repository from '../../domain/repositories/repository';
 
 export default class SubscriptionRepository implements Repository {
-  async findById(): Promise<any> {
+  async findById(id: String): Promise<any> {
     throw new Error('Not implemented yet!');
   }
 

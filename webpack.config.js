@@ -18,7 +18,15 @@ module.exports = {
   target: 'node',
   externals: [nodeExternals()],
   module: {
-    rules: [{ test: /\.ts(x?)$/, loader: 'ts-loader' }]
+    rules: [{
+      test: /\.ts(x?)$/,
+      loader: 'awesome-typescript-loader'
+    },
+    {
+      enforce: 'pre',
+      test: /\.js$/,
+      loader: 'source-map-loader',
+    }]
   },
   optimization: {
     nodeEnv: false

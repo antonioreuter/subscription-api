@@ -3,8 +3,12 @@
 import Auditable from './auditable';
 import ActionType from './actionType';
 
-export default interface Action extends Auditable {
-  id: String;
-  type: ActionType; //create an enum
+export default abstract class Action extends Auditable {
+  id: string;
+  type: ActionType;
+  subscriptionId: string;
   config: any;
+
+  abstract isValid(): Boolean;
+  abstract configTemplate(): any;
 }

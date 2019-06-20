@@ -73,7 +73,7 @@ resources:
             AttributeType: S
           - AttributeName: version
             AttributeType: N
-          - AttributeName: created_at
+          - AttributeName: createdAt
             AttributeType: S
         KeySchema:
           - AttributeName: id
