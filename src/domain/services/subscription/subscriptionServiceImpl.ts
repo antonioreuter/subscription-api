@@ -21,10 +21,10 @@ export default class SubscriptionServiceImpl implements SubscriptionService {
     return this.repository.save(subscription);
   }
 
-  findById(id: String): Promise<Subscription> {
+  findById(id: string): Promise<Subscription> {
     throw new Error('Method findById not implemented yet!');
   }
-  delete(id: String): Promise<void> {
+  delete(id: string): Promise<void> {
     throw new Error('Method delete not implemented yet!');
   }
 }

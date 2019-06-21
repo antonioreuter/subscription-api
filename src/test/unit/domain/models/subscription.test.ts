@@ -24,13 +24,8 @@ describe('Subscription', () => {
         }
       };
 
-      try {
-        const result = Subscription.validate(data);
-        expect(result).toBe(true);
-      } catch (err) {
-        console.error(err);
-        fail();
-      }
+      const result = Subscription.validate(data);
+      expect(result).toBe(true);
     });
 
     it('Validate schema for subscription - Alternate Flow', () => {
@@ -45,6 +40,7 @@ describe('Subscription', () => {
           where: 'air > 60'
         },
         typeHierarchy: {
+          organization: 'organization1',
           proposition: 'proposition1',
           application: 'application1'
         }
@@ -52,10 +48,10 @@ describe('Subscription', () => {
 
       try {
         Subscription.validate(data);
-        fail();
+        expect(true).toBe(false);
       } catch(err) {
         expect(err instanceof InvalidSchemaError).toBeTruthy;
-        expect(err.message).toMatch("Invalid subscription: data should have required property 'dataTypeName'");
+        expect(err.message).toBe("Invalid subscription: data should have required property 'dataTypeName'");
       }
     });
   });

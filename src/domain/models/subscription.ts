@@ -7,7 +7,7 @@ import { SubscriptionSQL, SubscriptionSQLSchema } from './subscriptionSQL';
 import { TypeHierarchy, TypeHierarchySchema } from './typeHierarchy';
 import InvalidSchemaError from '../errors/invalidSchemaError';
 
-const schema = {
+const schema: object = {
   type: 'object',
   title: 'Subscription',
   description: 'A subscription to define an iot-rule',
@@ -66,7 +66,7 @@ export default class Subscription extends Auditable {
     this.typeHierarchy = new TypeHierarchy(data.typeHierarchy);
   }
 
-  static validate(payload): Boolean {
+  static validate(payload: object): boolean {
     const ajv = new Ajv({ allErrors: true });
     const valid = ajv.validate(schema, payload);
     if (!valid) {

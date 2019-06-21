@@ -2,10 +2,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "sourceMap": true,
-    "target": "es2017",
+    "target": "es2018",
+    "strict": true,
     "moduleResolution": "node",
+    "strictPropertyInitialization": false,
     "lib": [
-      "es2017"
+      "es2018"
     ],
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,

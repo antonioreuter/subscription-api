@@ -36,7 +36,7 @@ describe('DataType', () => {
 
       try {
         DataType.validate(data);
-        fail();
+        expect(false).toBe(true);
       } catch (err) {
         expect(err instanceof InvalidSchemaError).toBeTruthy;
         expect(err.message).toMatch("Invalid data type: data should have required property 'schema'");

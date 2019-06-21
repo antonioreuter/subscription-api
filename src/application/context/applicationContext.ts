@@ -12,7 +12,7 @@ export default class ApplicationContext {
   private _subscriptionRepository: Repository;
   private _subscriptionService: SubscriptionService;
 
-  constructor(env: String) {
+  constructor(env: string) {
     this.factory = (env === 'local') ? new LocalFactory() : new CloudFactory();
   }
 

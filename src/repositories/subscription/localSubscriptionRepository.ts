@@ -2,7 +2,7 @@
 import Repository from '../../domain/repositories/repository';
 
 export default class LocalSubscriptionRepository implements Repository {
-  findById(id: String): Promise<any> {
+  findById(id: string): Promise<any> {
     throw new Error('Not implemented yet!');
   }
 
@@ -12,7 +12,7 @@ export default class LocalSubscriptionRepository implements Repository {
     return data;
   };
 
-  delete(id: String): Promise<void> {
+  delete(id: string): Promise<void> {
     throw new Error('Not implemented yet!');
   }
 };

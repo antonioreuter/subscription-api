@@ -1,8 +1,4 @@
 'use strict';
-interface SubscriptionSQL {
-  projection: string;
-  condition: string;
-};
 
 const SubscriptionSQLSchema = {
   type: 'object',
@@ -19,7 +15,21 @@ const SubscriptionSQLSchema = {
     }
   },
 
-  required: [ 'projection' ]
-}
+  required: ['projection']
+};
+
+class SubscriptionSQL {
+  projection: string;
+  condition: string;
+
+  constructor(data: any) {
+    if (!data) throw new Error('There is no data to be parsed - SubscriptionSQL');
+
+    this.projection = data.projection;
+    this.condition = data.condition;
+  }
+};
+
+
 
 export { SubscriptionSQL, SubscriptionSQLSchema };

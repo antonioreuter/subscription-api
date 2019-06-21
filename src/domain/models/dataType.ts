@@ -6,6 +6,34 @@ import { TypeHierarchy, TypeHierarchySchema } from "./typeHierarchy";
 import InvalidSchemaError from '../errors/invalidSchemaError';
 import { AuditableSchema, Auditable } from './auditable';
 
+const DataTypeSchema: object = {
+  title: 'Represents a definition of the type of message that is expected by a subscription',
+  type: 'object',
+  properties: {
+    id: {
+      type: 'string'
+    },
+    name: {
+      type: 'string',
+      minLength: 3,
+      maxLength: 100
+    },
+    description: {
+      type: 'string',
+      maxLength: 255
+    },
+
+    ...AuditableSchema,
+
+    typeHierarchy: TypeHierarchySchema,
+    schema: {
+      type: 'string'
+    },
+  },
+  required: ['name', 'typeHierarchy', 'schema'],
+  additionalProperties: false
+};
+
 class DataType extends Auditable {
   id: string;
   name: string;
@@ -32,7 +60,7 @@ class DataType extends Auditable {
     return `${topicPrefix}/+`;
   }
 
-  static validate(payload): Boolean {
+  static validate(payload: object): boolean {
     const ajv = new Ajv();
     const valid = ajv.validate(DataTypeSchema, payload);
     if (!valid) {
@@ -42,34 +70,6 @@ class DataType extends Auditable {
 
     return true;
   }
-};
-
-const DataTypeSchema: any = {
-  title: 'Represents a definition of the type of message that is expected by a subscription',
-  type: 'object',
-  properties: {
-    id: {
-      type: 'string'
-    },
-    name: {
-      type: 'string',
-      minLength: 3,
-      maxLength: 100
-    },
-    description: {
-      type: 'string',
-      maxLength: 255
-    },
-
-    ...AuditableSchema,
-
-    typeHierarchy: TypeHierarchySchema,
-    schema: {
-      type: 'string'
-    },
-  },
-  required: [ 'name', 'typeHierarchy', 'schema'],
-  additionalProperties: false
 };
 
 export { DataType, DataTypeSchema };
