@@ -7,6 +7,7 @@
     "test": "jest --watch",
     "coverage": "jest --coverage",
     "lint": "tsc --noEmit && eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
+    "pre-commit": "npm run lint; npm run coverage",
     "clean": "rm -rf node_modules/ reports/ .serverless/ .webpack/ .build/ ./coverage",
     "build": "npm run clean; npm ci;",
     "package": "sls package",
