@@ -6,6 +6,9 @@ import Auditable from './auditable';
 
 import TypeHierarchy from "./typeHierarchy";
 import DataTypeSchema from './schemas/dataTypeSchema';
+
+import IllegalArgumentError from '../errors/illegalArgumentError';
+
 export default class DataType extends Auditable {
   id: string;
   name: string;
@@ -14,7 +17,7 @@ export default class DataType extends Auditable {
   schema: string;
 
   constructor(data: any) {
-    if (!data) throw new Error('There is no data to be parsed - Data Type!');
+    if (!data) throw new IllegalArgumentError('There is no data to be parsed - Data Type!');
     DataType.validate(data);
 
     super(data);

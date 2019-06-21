@@ -31,7 +31,7 @@ describe('DataType', () => {
         const dataType = new DataType(data);
         expect(true).toBe(false); //if pass it will fail
       } catch (err) {
-        expect(err instanceof IllegalArgumentError).toBeTruthy;
+        expect(err instanceof IllegalArgumentError).toBe(true);
       }
     });
   });
@@ -70,7 +70,7 @@ describe('DataType', () => {
         DataType.validate(data);
         expect(false).toBe(true);
       } catch (err) {
-        expect(err instanceof InvalidSchemaError).toBeTruthy;
+        expect(err instanceof InvalidSchemaError).toBe(true);
         expect(err.message).toMatch("Invalid schema: data should have required property 'schema'");
       }
     });

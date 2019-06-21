@@ -1,6 +1,8 @@
 'use strict';
 
 import * as moment from 'moment';
+import IllegalArgumentError from '../errors/illegalArgumentError';
+
 
 const defaultObject = {
   version: 1,
@@ -13,10 +15,11 @@ export default abstract class Auditable {
   createdAt: string;
   updatedAt: string;
 
-  constructor(data = defaultObject) {
-    if (!data) throw new Error('There is no data to be parsed');
-    this.version = data.version;
-    this.createdAt = data.createdAt;
-    this.updatedAt = data.updatedAt;
+  constructor(data: any) {
+    if (!data) throw new IllegalArgumentError('There is no data to be parsed - Auditable');
+
+    this.version = data.version || defaultObject.version;
+    this.createdAt = data.createdAt || defaultObject.createdAt;
+    this.updatedAt = data.updatedAt || defaultObject.updatedAt;
   }
 };

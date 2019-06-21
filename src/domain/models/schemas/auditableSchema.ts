@@ -2,7 +2,7 @@
 
 const AuditableSchema = {
   version: {
-    type: 'string'
+    type: 'number'
   },
 
   createdAt: {

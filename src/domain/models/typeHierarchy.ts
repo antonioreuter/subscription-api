@@ -3,13 +3,16 @@
 import schemaValidator from './validators/schemaValidator';
 import TypeHierarchySchema from './schemas/typeHierarchySchema';
 
+import IllegalArgumentError from '../errors/illegalArgumentError';
+
+
 export default class TypeHierarchy {
   organization: string;
   proposition: string;
   application: string;
 
   constructor(data: any) {
-    if (!data) throw new Error('There is no data to be parsed');
+    if (!data) throw new IllegalArgumentError('There is no data to be parsed');
     TypeHierarchy.validate(data);
 
     this.organization = data.organization;

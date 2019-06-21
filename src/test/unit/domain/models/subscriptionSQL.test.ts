@@ -24,7 +24,7 @@ describe('SubscriptionSQL', () => {
         const subscription = new SubscriptionSQL(data);
         expect(true).toBe(false); //if pass it will fail
       } catch (err) {
-        expect(err instanceof IllegalArgumentError).toBeTruthy;
+        expect(err instanceof IllegalArgumentError).toBe(true);
       }
     });
   });

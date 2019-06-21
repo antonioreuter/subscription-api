@@ -6,8 +6,9 @@ import Auditable from './auditable';
 import SubscriptionSQL from './subscriptionSQL';
 import TypeHierarchy from './typeHierarchy';
 
-
 import SubscriptionSchema from './schemas/subscriptionSchema';
+
+import IllegalArgumentError from '../errors/illegalArgumentError';
 
 export default class Subscription extends Auditable {
   id: string;
@@ -18,10 +19,9 @@ export default class Subscription extends Auditable {
   typeHierarchy: TypeHierarchy;
 
   constructor(data: any) {
-    if (!data) throw new Error('There is no data to be parsed!') ;
+    if (!data) throw new IllegalArgumentError('There is no data to be parsed!') ;
     Subscription.validate(data);
 
-    console.log(`Calling super of Subscription`);
     super(data);
 
     this.id = data.id;

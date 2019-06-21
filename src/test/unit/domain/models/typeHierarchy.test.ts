@@ -25,7 +25,7 @@ describe('TypeHierarchy', () => {
         const typeHierarchy = new TypeHierarchy(data);
         expect(true).toBe(false); //if pass it will fail
       } catch (err) {
-        expect(err instanceof IllegalArgumentError).toBeTruthy;
+        expect(err instanceof IllegalArgumentError).toBe(true);
       }
     });
   });
@@ -52,7 +52,7 @@ describe('TypeHierarchy', () => {
         TypeHierarchy.validate(data);
         expect(true).toBe(false);
       } catch (err) {
-        expect(err instanceof InvalidSchemaError).toBeTruthy;
+        expect(err instanceof InvalidSchemaError).toBe(true);
         expect(err.message).toBe("Invalid schema: data should have required property 'organization'");
       }
     });
