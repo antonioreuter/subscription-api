@@ -1,40 +1,12 @@
 'use strict';
 
-import Ajv from 'ajv';
+import schemaValidator from './validators/schemaValidator';
 
-import { TypeHierarchy, TypeHierarchySchema } from "./typeHierarchy";
-import InvalidSchemaError from '../errors/invalidSchemaError';
-import { AuditableSchema, Auditable } from './auditable';
+import Auditable from './auditable';
 
-const DataTypeSchema: object = {
-  title: 'Represents a definition of the type of message that is expected by a subscription',
-  type: 'object',
-  properties: {
-    id: {
-      type: 'string'
-    },
-    name: {
-      type: 'string',
-      minLength: 3,
-      maxLength: 100
-    },
-    description: {
-      type: 'string',
-      maxLength: 255
-    },
-
-    ...AuditableSchema,
-
-    typeHierarchy: TypeHierarchySchema,
-    schema: {
-      type: 'string'
-    },
-  },
-  required: ['name', 'typeHierarchy', 'schema'],
-  additionalProperties: false
-};
-
-class DataType extends Auditable {
+import TypeHierarchy from "./typeHierarchy";
+import DataTypeSchema from './schemas/dataTypeSchema';
+export default class DataType extends Auditable {
   id: string;
   name: string;
   description: string;
@@ -61,17 +33,6 @@ class DataType extends Auditable {
   }
 
   static validate(payload: object): boolean {
-    const ajv = new Ajv();
-    const valid = ajv.validate(DataTypeSchema, payload);
-    if (!valid) {
-      const errorMsg = `Invalid data type: ${ajv.errorsText()}`;
-      throw new InvalidSchemaError(errorMsg);
-    }
-
-    return true;
+    return schemaValidator(DataTypeSchema, payload);
   }
 };
-
-export { DataType, DataTypeSchema };
-
-

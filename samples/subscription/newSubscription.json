@@ -6,7 +6,7 @@
   "description": "Measure the air quality",
   "sql": {
     "projection": "id, clientId(), msg.air as air",
-    "where": "air > 60"
+    "condition": "air > 60"
   },
   "typeHierarchy": {
     "organization": "4kj23l-l3k4j5l34-lk3j4lkj5l"

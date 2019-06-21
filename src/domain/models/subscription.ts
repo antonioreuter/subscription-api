@@ -1,48 +1,13 @@
 'use strict';
 
-import Ajv from 'ajv';
+import schemaValidator from './validators/schemaValidator';
 
-import { AuditableSchema, Auditable } from './auditable';
-import { SubscriptionSQL, SubscriptionSQLSchema } from './subscriptionSQL';
-import { TypeHierarchy, TypeHierarchySchema } from './typeHierarchy';
-import InvalidSchemaError from '../errors/invalidSchemaError';
+import Auditable from './auditable';
+import SubscriptionSQL from './subscriptionSQL';
+import TypeHierarchy from './typeHierarchy';
 
-const schema: object = {
-  type: 'object',
-  title: 'Subscription',
-  description: 'A subscription to define an iot-rule',
-  properties: {
-    id: {
-      type: 'string'
-    },
 
-    ...AuditableSchema,
-
-    name: {
-      type: 'string',
-      minLength: 3,
-      maxLength: 100,
-      description: "The subscription's name"
-    },
-
-    description: {
-      type: 'string',
-      maxLength: 255
-    },
-
-    sql: SubscriptionSQLSchema,
-
-    dataTypeName: {
-      type: 'string',
-      minLength: 3
-    },
-
-    typeHierarchy: TypeHierarchySchema
-  },
-
-  required: [ 'name', 'sql', 'dataTypeName', 'typeHierarchy' ],
-  additionalProperties: false
-};
+import SubscriptionSchema from './schemas/subscriptionSchema';
 
 export default class Subscription extends Auditable {
   id: string;
@@ -62,18 +27,12 @@ export default class Subscription extends Auditable {
     this.id = data.id;
     this.name = data.name;
     this.dataTypeName = data.dataTypeName;
+    this.description = data.description;
     this.sql = data.sql;
     this.typeHierarchy = new TypeHierarchy(data.typeHierarchy);
   }
 
   static validate(payload: object): boolean {
-    const ajv = new Ajv({ allErrors: true });
-    const valid = ajv.validate(schema, payload);
-    if (!valid) {
-      const errorMsg = `Invalid subscription: ${ajv.errorsText()}`;
-      throw new InvalidSchemaError(errorMsg);
-    }
-
-    return true;
+    return schemaValidator(SubscriptionSchema, payload);
   }
 }

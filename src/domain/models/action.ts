@@ -1,6 +1,6 @@
 'use strict';
 
-import { Auditable } from './auditable';
+import Auditable from './auditable';
 import ActionType from './actionType';
 
 export default abstract class Action extends Auditable {
@@ -9,6 +9,6 @@ export default abstract class Action extends Auditable {
   subscriptionId: string;
   config: any;
 
-  abstract isValid(): boolean;
+  abstract schema(): boolean;
   abstract configTemplate(): any;
 }

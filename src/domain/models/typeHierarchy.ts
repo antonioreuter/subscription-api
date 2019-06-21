@@ -1,6 +1,9 @@
 'use strict';
 
-class TypeHierarchy {
+import schemaValidator from './validators/schemaValidator';
+import TypeHierarchySchema from './schemas/typeHierarchySchema';
+
+export default class TypeHierarchy {
   organization: string;
   proposition: string;
   application: string;
@@ -14,29 +17,7 @@ class TypeHierarchy {
     this.application = data.application;
   }
 
-  static validate(payload: any): void {
-
+  static validate(payload: object): boolean {
+    return schemaValidator(TypeHierarchySchema, payload);
   }
-}
-
-const TypeHierarchySchema = {
-  type: 'object',
-  title: 'Define the type hierarchy structure',
-  properties: {
-    organization: {
-      type: 'string',
-      minimum: 3
-    },
-    proposition: {
-      type: 'string',
-      minimum: 3
-    },
-    application: {
-      type: 'string',
-      minimum: 3
-    }
-  },
-  required: [ 'organization', 'proposition', 'application' ]
 };
-
-export { TypeHierarchy, TypeHierarchySchema };
