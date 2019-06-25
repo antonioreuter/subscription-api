@@ -1,7 +1,8 @@
 'use strict';
 
-export default interface Repository {
-  findById(id: string): Promise<any>;
-  save(data: any): Promise<any>;
+export default interface Repository<T> {
+  findById(id: string): Promise<T[]>;
+  find(params: any): Promise<T[]>
+  save(data: T): Promise<T>;
   delete(id: string): Promise<void>;
 }

@@ -1,14 +1,15 @@
 {
   "id": "airpurifier#air_quality",
-  "createdAt": "2019-06-18T19:30:00+1:00",
-  "version": "1",
-  "alias": "AirQuality",
-  "description": "Measure the air quality",
+  "name": "humidityLowerThan30",
+  "description": "Sends an alert when humidity reach a number lower than 30",
   "sql": {
     "projection": "id, clientId(), msg.air as air",
     "condition": "air > 60"
   },
+  "dataTypeName": "air_quality",
   "typeHierarchy": {
-    "organization": "4kj23l-l3k4j5l34-lk3j4lkj5l"
+    "organization": "org_1",
+    "proposition": "prop_1",
+    "application": "app_1"
   }
 }

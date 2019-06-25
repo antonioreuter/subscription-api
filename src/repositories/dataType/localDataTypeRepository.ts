@@ -1,19 +1,24 @@
 'use strict';
 
 import Repository from "domain/repositories/repository";
+import DataType from 'domain/models/dataType';
 
-export default class LocalDataTypeRepository implements Repository {
-  findById(id: string): Promise<any> {
+export default class LocalDataTypeRepository implements Repository<DataType> {
+  async findById(id: string): Promise<DataType[]> {
     throw new Error('Not implemented yet!');
   }
 
-  save(data: any): Promise<any> {
+  async find(params: any): Promise<DataType[]> {
+    throw new Error('Not implemented yet!');
+  }
+
+  async save(data: DataType): Promise<DataType> {
     console.log(`Saving in the local env: ${JSON.stringify(data)}`);
 
     return data;
   };
 
-  delete(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     throw new Error('Not implemented yet!');
   }
 };

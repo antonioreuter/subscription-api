@@ -1,19 +1,24 @@
 'use strict';
 
-import Repository from "domain/repositories/repository";
+import DynamoDbBaseRepository from '../aws/dynamoDbBaseRepository';
+import DataType from "domain/models/dataType";
 
-export default class DataTypeRepository implements Repository {
-  findById(id: string): Promise<any> {
+export default class DataTypeRepository extends DynamoDbBaseRepository<DataType> {
+  async findById(id: string): Promise<DataType[]> {
     throw new Error('Not implemented yet!');
   }
 
-  save(data: any): Promise<any> {
+  async find(params: any): Promise<DataType[]> {
+    throw new Error('Not implemented yet!');
+  }
+
+  async save(data: DataType): Promise<DataType> {
     console.log(`Saving in the local env: ${JSON.stringify(data)}`);
 
     return data;
   };
 
-  delete(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     throw new Error('Not implemented yet!');
   }
 };
