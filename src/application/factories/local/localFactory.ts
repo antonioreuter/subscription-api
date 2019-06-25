@@ -8,8 +8,10 @@ import SubscriptionServiceImpl from '../../../domain/services/subscription/subsc
 import Repository from '../../../domain/repositories/repository';
 import LocalSubscriptionRepository from '../../../repositories/subscription/localSubscriptionRepository';
 
+import Subscription from '../../../domain/models/subscription';
+
 export default class CloudFactory implements Factory {
-  createSubscriptionRepository(): Repository {
+  createSubscriptionRepository(): Repository<Subscription> {
     return new LocalSubscriptionRepository();
   }
 
