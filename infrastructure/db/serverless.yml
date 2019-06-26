@@ -1,0 +1,52 @@
+service: subscription-db
+
+custom:
+  applicationName: Subsription-DB
+  subscription-table: "subscription-${self:provider.stage}"
+  subscription-table-export-resource: "dynamodb-arn-subscription-${self:provider.stage}"
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: eu-west-1
+
+tags:
+  DEPARTMENT: "HSDP"
+  TEAM: "Las Vegas"
+
+resources:
+  Resources:
+    subscription-table:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:custom.subscription-table}"
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: resourceId
+            AttributeType: N
+          - AttributeName: version
+            AttributeType: S
+          - AttributeName: createdAt
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+          - AttributeName: resourceId
+            AttributeType: RANGE
+
+  Outputs:
+    SubscriptionTable:
+      Description: 'Stores the resources necessary for the subscription api'
+      Value:
+        Fn::Join:
+          - ':'
+          - - 'arn'
+            - Ref: 'AWS::Partition'
+            - sns
+            - Ref: 'AWS::Region'
+            - Ref: 'AWS::AccountId'
+            - ${self:custom.subscription-table}
+      Export:
+        Name: "${self:custom.subscription-table-export-resource}"
