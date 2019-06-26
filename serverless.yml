@@ -9,7 +9,7 @@ package:
 
 custom:
   applicationName: Subsription-Api
-  subscription-table: "subscription-${self:provider.stage}"
+  subscription-table: "dynamodb-arn-subscription-${self:provider.stage}"
   webpack:
     includeModules:
       forceExclude:
@@ -22,24 +22,10 @@ provider:
   region: eu-west-1
   versionFunctions: true
 
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - "dynamodb:*"
-      Resource:
-        - Fn::Join:
-          - ":"
-          - - "arn:aws:dynamodb"
-            - Ref: "AWS::Region"
-            - Ref: "AWS::AccountId"
-            - Fn::Join:
-              - "/"
-              - - "table"
-                - "${self:custom.subscription-table}"
-
   environment:
     ENV: "dev"
-    SUBSCRIPTION-TABLE: "${self:custom.subscription-table}"
+    SUBSCRIPTION-TABLE:
+      Fn::ImportValue: "${self:custom.subscription-table}"
 
 tags:
   DEPARTMENT: "HSDP"
@@ -62,21 +48,3 @@ functions:
     environment:
       ComponentName: "Subscription-Post"
 
-resources:
-  Resources:
-    subscription-table:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: "${self:custom.subscription-table}"
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-          - AttributeName: version
-            AttributeType: N
-          - AttributeName: createdAt
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-          - AttributeName: version
-            AttributeType: RANGE
