@@ -5,7 +5,6 @@ import TypeHierarchySchema from './schemas/typeHierarchySchema';
 
 import IllegalArgumentError from '../errors/illegalArgumentError';
 
-
 export default class TypeHierarchy {
   organization: string;
   proposition: string;

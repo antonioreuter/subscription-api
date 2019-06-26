@@ -1,15 +1,17 @@
 {
-  "id": "airpurifier#air_quality",
   "name": "humidityLowerThan30",
   "description": "Sends an alert when humidity reach a number lower than 30",
   "sql": {
     "projection": "id, clientId(), msg.air as air",
     "condition": "air > 60"
   },
-  "dataTypeName": "air_quality",
+  "dataTypeResourceId": "dt_0123",
   "typeHierarchy": {
-    "organization": "org_1",
-    "proposition": "prop_1",
-    "application": "app_1"
+    "organization": "123",
+    "proposition": "456",
+    "application": "7890"
+  },
+  "config": {
+    "showErrors": "true"
   }
 }

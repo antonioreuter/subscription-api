@@ -1,22 +1,22 @@
 'use strict';
 
+import { v1 as uuidV1 } from 'uuid';
+
 import schemaValidator from './validators/schemaValidator';
 
-import Auditable from './auditable';
+import Entity from './entity';
 import SubscriptionSQL from './subscriptionSQL';
-import TypeHierarchy from './typeHierarchy';
 
 import SubscriptionSchema from './schemas/subscriptionSchema';
 
 import IllegalArgumentError from '../errors/illegalArgumentError';
 
-export default class Subscription extends Auditable {
-  id: string;
+export default class Subscription extends Entity {
   name: string;
   description: string;
-  dataTypeName: string;
+  dataTypeResourceId: string;
   sql: SubscriptionSQL;
-  typeHierarchy: TypeHierarchy;
+  config: object;
 
   constructor(data: any) {
     if (!data) throw new IllegalArgumentError('There is no data to be parsed!') ;
@@ -24,12 +24,15 @@ export default class Subscription extends Auditable {
 
     super(data);
 
-    this.id = data.id;
     this.name = data.name;
-    this.dataTypeName = data.dataTypeName;
+    this.dataTypeResourceId = data.dataTypeResourceId;
     this.description = data.description;
     this.sql = data.sql;
-    this.typeHierarchy = new TypeHierarchy(data.typeHierarchy);
+    this.config = data.config;
+  }
+
+  generateResourceId(data: any):string {
+    return `${data.dataTypeResourceId}#sub_${uuidV1()}`;
   }
 
   static validate(payload: object): boolean {

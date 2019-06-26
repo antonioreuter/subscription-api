@@ -8,7 +8,6 @@ describe('DataType', () => {
   describe('.constructor', () => {
     it('When we create a new data type', () => {
       const data = {
-        id: 'airpurifier#air_quality',
         name: 'AirQuality',
         description: 'Datatype to measure the air quality',
         typeHierarchy: {
@@ -16,7 +15,10 @@ describe('DataType', () => {
           proposition: 'proposition-1',
           application: 'application-1'
         },
-        schema: "add meta schema"
+        schema: "add meta schema",
+        config: {
+          prop: true
+        }
       };
 
       const dataType = new DataType(data);
@@ -47,7 +49,10 @@ describe('DataType', () => {
           proposition: 'proposition-1',
           application: 'application-1'
         },
-        schema: "add meta schema"
+        schema: "add meta schema",
+        config: {
+          prop: true
+        }
       };
 
       const result = DataType.validate(data);
@@ -83,11 +88,14 @@ describe('DataType', () => {
         name: 'AirQuality',
         description: 'Datatype to measure the air quality',
         typeHierarchy: {
-          organization: '4kj23l-l3k4j5l34-lk3j4lkj5l',
-          proposition: 'proposition-1',
-          application: 'application-1'
+          organization: 'org_1',
+          proposition: 'prop_1',
+          application: 'app_1'
         },
-        schema: "add meta schema"
+        schema: "add meta schema",
+        config: {
+          prop: true
+        }
       };
 
       const dataType = new DataType(data);

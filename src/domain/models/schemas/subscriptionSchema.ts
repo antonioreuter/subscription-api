@@ -1,19 +1,15 @@
 'use strict';
 
-import AuditableSchema from './auditableSchema';
-import TypeHierarchySchema from './typeHierarchySchema';
+import { EntitySchema, entityRequiredFields } from './entitySchema';
 import SubscriptionSQLSchema from './subscriptionSQLSchema';
+import ConfigSchema from './configSchema';
 
 const SubscriptionSchema: object = {
   type: 'object',
   title: 'Subscription',
   description: 'A subscription to define an iot-rule',
   properties: {
-    id: {
-      type: 'string'
-    },
-
-    ...AuditableSchema,
+    ...EntitySchema,
 
     name: {
       type: 'string',
@@ -29,15 +25,15 @@ const SubscriptionSchema: object = {
 
     sql: SubscriptionSQLSchema,
 
-    dataTypeName: {
+    dataTypeResourceId: {
       type: 'string',
-      minLength: 3
+      minLength: 5
     },
 
-    typeHierarchy: TypeHierarchySchema
+    config: ConfigSchema
   },
 
-  required: ['name', 'sql', 'dataTypeName', 'typeHierarchy'],
+  required: ['name', 'sql', 'dataTypeResourceId', 'config'].concat(entityRequiredFields),
   additionalProperties: false
 };
 

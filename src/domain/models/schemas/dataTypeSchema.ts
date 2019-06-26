@@ -1,15 +1,14 @@
 'use strict';
 
-import AuditableSchema from './auditableSchema';
-import TypeHierarchySchema from './typeHierarchySchema';
+import { EntitySchema, entityRequiredFields} from './entitySchema';
+import ConfigSchema from './configSchema';
 
 const DataTypeSchema: object = {
   title: 'Represents a definition of the type of message that is expected by a subscription',
   type: 'object',
   properties: {
-    id: {
-      type: 'string'
-    },
+    ...EntitySchema,
+
     name: {
       type: 'string',
       minLength: 3,
@@ -20,14 +19,13 @@ const DataTypeSchema: object = {
       maxLength: 255
     },
 
-    ...AuditableSchema,
-
-    typeHierarchy: TypeHierarchySchema,
     schema: {
       type: 'string'
     },
+
+    config: ConfigSchema
   },
-  required: ['name', 'typeHierarchy', 'schema'],
+  required: ['name', 'schema', 'config'].concat(entityRequiredFields),
   additionalProperties: false
 };
 

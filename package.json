@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "sls": "sls",
-    "test": "jest --watch",
+    "test": "jest",
+    "watch": "jest --watch",
     "coverage": "jest --coverage",
     "lint": "tsc --noEmit && eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "pre-commit": "npm run lint; npm run coverage",
@@ -20,10 +21,12 @@
   "dependencies": {
     "ajv": "^6.10.0",
     "aws-sdk": "^2.476.0",
-    "moment": "^2.24.0",
-    "source-map-support": "^0.5.12"
+    "source-map-support": "^0.5.12",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "@types/moment": "^2.13.0",
+    "@types/uuid": "^3.4.4",
     "@types/async": "^3.0.0",
     "@types/aws-lambda": "^8.10.27",
     "@types/jest": "^24.0.15",

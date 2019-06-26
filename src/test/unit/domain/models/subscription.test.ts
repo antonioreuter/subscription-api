@@ -13,7 +13,7 @@ describe('Subscription', () => {
         version: 1,
         name: 'AirQuality',
         description: 'Measure the air quality',
-        dataTypeName: 'airpurifier#air_quality#air',
+        dataTypeResourceId: 'dt_4u23io4uo2',
         sql: {
           projection: 'id, clientId(), msg.air as air',
           condition: 'air > 60'
@@ -22,6 +22,9 @@ describe('Subscription', () => {
           organization: '4kj23l-l3k4j5l34-lk3j4lkj5l',
           proposition: 'rjwelkrjwe',
           application: 'rjelwkjrlwe'
+        },
+        config: {
+          showErrors: true
         }
       };
 
@@ -50,7 +53,7 @@ describe('Subscription', () => {
         version: 1,
         name: 'AirQuality',
         description: 'Measure the air quality',
-        dataTypeName: 'airpurifier#air_quality#air',
+        dataTypeResourceId: 'dt_4u23io4uo2',
         sql: {
           projection: 'id, clientId(), msg.air as air',
           condition: 'air > 60'
@@ -59,6 +62,9 @@ describe('Subscription', () => {
           organization: '4kj23l-l3k4j5l34-lk3j4lkj5l',
           proposition: 'rjwelkrjwe',
           application: 'rjelwkjrlwe'
+        },
+        config: {
+          showErrors: true
         }
       };
 
@@ -81,6 +87,9 @@ describe('Subscription', () => {
           organization: 'organization1',
           proposition: 'proposition1',
           application: 'application1'
+        },
+        config: {
+          showErrors: false
         }
       };
 
@@ -89,7 +98,7 @@ describe('Subscription', () => {
         expect(true).toBe(false);
       } catch(err) {
         expect(err instanceof InvalidSchemaError).toBe(true);
-        expect(err.message).toBe("Invalid schema: data should have required property 'dataTypeName'");
+        expect(err.message).toBe("Invalid schema: data should have required property 'dataTypeResourceId'");
       }
     });
   });
