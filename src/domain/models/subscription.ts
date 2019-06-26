@@ -1,6 +1,6 @@
 'use strict';
 
-import { v1 as uuidV1 } from 'uuid';
+import { generate as idGenerator} from './util/idGenerator';
 
 import schemaValidator from './validators/schemaValidator';
 
@@ -32,7 +32,7 @@ export default class Subscription extends Entity {
   }
 
   generateResourceId(data: any):string {
-    return `${data.dataTypeResourceId}#sub_${uuidV1()}`;
+    return `${data.dataTypeResourceId}#sub_${idGenerator()}`;
   }
 
   static validate(payload: object): boolean {

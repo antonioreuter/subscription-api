@@ -11,9 +11,9 @@ describe('DataType', () => {
         name: 'AirQuality',
         description: 'Datatype to measure the air quality',
         typeHierarchy: {
-          organization: '4kj23l-l3k4j5l34-lk3j4lkj5l',
-          proposition: 'proposition-1',
-          application: 'application-1'
+          organization: '123',
+          proposition: '456',
+          application: '7890'
         },
         schema: "add meta schema",
         config: {
@@ -24,6 +24,8 @@ describe('DataType', () => {
       const dataType = new DataType(data);
 
       expect(dataType).toBeDefined();
+      expect(dataType.id).toEqual('org_123#prop_456#app_7890');
+      expect(dataType.resourceId).toMatch(/dt_.*/);
       expect(dataType).toMatchObject(data);
     });
 
@@ -65,9 +67,9 @@ describe('DataType', () => {
         name: 'AirQuality',
         description: 'Datatype to measure the air quality',
         typeHierarchy: {
-          organization: '4kj23l-l3k4j5l34-lk3j4lkj5l',
-          proposition: 'proposition-1',
-          application: 'application-1'
+          organization: '123',
+          proposition: '456',
+          application: '789'
         }
       };
 
@@ -84,13 +86,14 @@ describe('DataType', () => {
   describe('#topic', () => {
     it('Return the topic name', () => {
       const data = {
-        id: 'airpurifier#air_quality',
+        id: 'org_123-456#prop_456-789#app_789-123',
+        resourceId: 'dt_123-789',
         name: 'AirQuality',
         description: 'Datatype to measure the air quality',
         typeHierarchy: {
-          organization: 'org_1',
-          proposition: 'prop_1',
-          application: 'app_1'
+          organization: '123-456',
+          proposition: '456-789',
+          application: '789-123'
         },
         schema: "add meta schema",
         config: {
@@ -99,7 +102,7 @@ describe('DataType', () => {
       };
 
       const dataType = new DataType(data);
-      expect(dataType.topic()).toEqual(`${data.typeHierarchy.organization}/${data.typeHierarchy.proposition}/${data.typeHierarchy.application}/${data.name}/+`);
+      expect(dataType.topic()).toEqual('org_123_456/prop_456_789/app_789_123/dt_123_789/+');
     });
   });
 });

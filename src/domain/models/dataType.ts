@@ -1,6 +1,6 @@
 'use strict';
 
-import { v1 as uuidV1 } from 'uuid';
+import { generate as idGenerator} from './util/idGenerator';
 import schemaValidator from './validators/schemaValidator';
 
 import Entity from './entity';
@@ -28,12 +28,14 @@ export default class DataType extends Entity {
   }
 
   topic(): string {
-    const topicPrefix = [this.typeHierarchy.organization, this.typeHierarchy.proposition, this.typeHierarchy.application, this.name].join('/');
-    return `${topicPrefix}/+`;
+    const topicPrefix = this.id.replace(/#/g, '/');
+    const topic = `${topicPrefix}/${this.resourceId}/+`.replace(/-/g,'_');
+
+    return topic;
   }
 
   generateResourceId(data: any): string {
-    return `dt_${uuidV1()}`;
+    return `dt_${idGenerator()}`;
   }
 
   static validate(payload: object): boolean {

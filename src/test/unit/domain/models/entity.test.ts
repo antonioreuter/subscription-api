@@ -24,9 +24,9 @@ describe('Entity', () => {
         createdAt: moment.utc().format(),
         updatedAt: moment.utc().format(),
         typeHierarchy: {
-          organization: '123',
-          proposition: '456',
-          application: '7890'
+          organization: '123-456',
+          proposition: '456-789',
+          application: '789-123'
         },
       };
 
@@ -34,7 +34,8 @@ describe('Entity', () => {
 
       expect(foo).toBeDefined();
       expect(foo).toMatchObject(data);
-      expect(foo.id).toEqual(`org_${data.typeHierarchy.organization}#prop_${data.typeHierarchy.proposition}#app_${data.typeHierarchy.application}`);
+      expect(foo.id).toEqual(`org_123-456#prop_456-789#app_789-123`);
+      expect(foo.resourceId).toEqual('foo_1234');
       expect(foo.version).toEqual(2);
     });
 

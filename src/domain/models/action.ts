@@ -1,6 +1,6 @@
 'use strict';
 
-import { v1 as uuidV1 } from 'uuid';
+import { generate as idGenerator} from './util/idGenerator';
 
 import schemaValidator from './validators/schemaValidator';
 import ActionSchema from './schemas/actionSchema';
@@ -9,7 +9,6 @@ import Entity from './entity';
 import ActionType from './actionType';
 
 import IllegalArgumentError from '../errors/illegalArgumentError';
-
 
 export default abstract class Action extends Entity {
   type: ActionType;
@@ -31,7 +30,7 @@ export default abstract class Action extends Entity {
   abstract configTemplate(): any;
 
   generateResourceId(data: any):string {
-    return `${data.subscriptionResourceId}#act_${uuidV1()}`;
+    return `${data.subscriptionResourceId}#act_${idGenerator()}`;
   }
 
   static validate(payload: object): boolean {
